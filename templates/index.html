@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Compare</title>
+    </head>
+    <body>
+        <h2>Compare players</h2>
+        <input id='user1' placeholder='User 1'>
+        <input id='user2' placeholder='User 2'>
+        <button onclick='compare()'>Go</button>
+        <div id='out'></div>
+        <script>
+            async function compare() {
+                let r = await fetch('/compare', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({usernames: [user1.value, user2.value]})})
+                let d = await r.json()
+                out.innerText = JSON.stringify(d, null, 2)
+            }
+        </script>
+    </body>
+</html>
