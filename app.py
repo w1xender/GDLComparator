@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import requests
+from re import sub
 app = Flask(__name__)
 def fetchData(username):
     usersResponse = requests.get('https://api.demonlist.org/leaderboard/user/list', params={'search': username})
@@ -11,16 +12,17 @@ def fetchData(username):
             userRecordsResponse = requests.get('https://api.demonlist.org/user/record/list', params={'user_id': user['id']})
             userRecordsData = userRecordsResponse.json()['data']
             hardestLevelResponse = requests.get('https://api.demonlist.org/level/classic/get', params={'placement': userData['levels']['hardest']['placement']})
-            hardestLevelCreator = hardestLevelResponse.json()['data']['creator'].replace('&amp;', 'and')
+            hardestLevelCreator = hardestLevelResponse.json()['data']['creator']
+            hardestLevelCreator = sub(r'\band\b', '&', hardestLevelCreator.replace('&amp;', '&'))
             verifiedData = userData['levels']['verified']
             hardestVerifiedLevelCreator = None
             if verifiedData:
                 hardestVerifiedLevelResponse = requests.get('https://api.demonlist.org/level/classic/get', params={'placement': verifiedData[0]['placement']})
-                hardestVerifiedLevelCreator = hardestVerifiedLevelResponse.json()['data']['creator'].replace('&amp;', 'and')
+                hardestVerifiedLevelCreator = hardestVerifiedLevelResponse.json()['data']['creator']
+                hardestVerifiedLevelCreator = sub(r'\band\b', '&', hardestVerifiedLevelCreator.replace('&amp;', '&'))
             displayInfo = {
                 'country': user['country'].replace('-', ' '),
                 'username': user['username'],
-                'badge': userData['badge'],
                 'placement': userData['placement'],
                 'points': float(userData['points']),
                 'hardestLevelName': userData['levels']['hardest']['name'],
@@ -29,7 +31,6 @@ def fetchData(username):
                 'cleared': userRecordsData['completed_count'],
                 'notCleared': userRecordsData['total_count'] - userRecordsData['completed_count'],
                 'verifiedCount': len(verifiedData) if verifiedData else 0,
-                'hasVerified': bool(verifiedData),
                 'hardestVerifiedLevelName': verifiedData[0]['name'] if verifiedData else None,
                 'hardestVerifiedLevelCreator': hardestVerifiedLevelCreator if verifiedData else None,
                 'hardestVerifiedLevelPlacement': verifiedData[0]['placement'] if verifiedData else None
@@ -81,14 +82,11 @@ def compareUsers(stats):
     results.append(f'{stats[1]["username"]}: {scores[1]} points')
     if scores[0] > scores[1]:
         results.append(f'{stats[0]["username"]} wins!')
-        winner = stats[0]['username']
     elif scores[1] > scores[0]:
         results.append(f'{stats[1]["username"]} wins!')
-        winner = stats[1]['username']
     else:
         results.append('Tie!')
-        winner = None
-    return {'results': results, 'scores': scores, 'winner': winner}
+    return {'results': results, 'scores': scores}
 @app.route('/')
 def index():
     return render_template('index.html')
