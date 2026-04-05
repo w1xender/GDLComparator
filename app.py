@@ -72,10 +72,10 @@ def compareUsers(stats):
         scores[1] += 1
     if stats[0]['hardestVerified'] is not None and stats[1]['hardestVerified'] is not None:
         if stats[0]['hardestVerified'] < stats[1]['hardestVerified']:
-            results.append(f'+1! {stats[0]["username"]}\'s hardest verified level is harder than {stats[1]["hardest"]}')
+            results.append(f'+1! {stats[0]["username"]}\'s hardest verified level is harder than {stats[1]["hardestVerified"]}')
             scores[0] += 1
         elif stats[1]['hardestVerified'] < stats[0]['hardestVerified']:
-            results.append(f'+1! {stats[1]["username"]}\'s hardest verified level is harder than {stats[0]["hardest"]}')
+            results.append(f'+1! {stats[1]["username"]}\'s hardest verified level is harder than {stats[0]["hardestVerified"]}')
             scores[1] += 1
     results.append(f'{stats[0]["username"]}: {scores[0]} points')
     results.append(f'{stats[1]["username"]}: {scores[1]} points')
