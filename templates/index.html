@@ -13,5 +13,21 @@
             <input id='user2'>
             <button>GO</button>
         </div>
+        <script>
+            let button = document.querySelector('button')
+            button.addEventListener('click', function(e) {
+                let circle = document.createElement('div')
+                let rect = button.getBoundingClientRect()
+                circle.classList.add('circle')
+                let x = e.clientX - rect.left
+                let y = e.clientY - rect.top
+                circle.style.left = `${x}px`
+                circle.style.top = `${y}px`
+                button.appendChild(circle)
+                setTimeout(function() {
+                    circle.remove()
+                }, 500)
+            })
+        </script>
     </body>
 </html>
