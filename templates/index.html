@@ -11,9 +11,20 @@
         <div class='inputClass'>
             <input id='user1'>
             <input id='user2'>
-            <button>GO</button>
+            <button onclick='compare()'>GO</button>
+            <div id='out'></div>
         </div>
         <script>
+            async function compare() {
+                let r = await fetch('/compare', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({usernames: [user1.value, user2.value]})})
+                let d = await r.json()
+                out.innerText = ''
+                out.innerText += `[${d.users[0].country}] ${d.users[0].username}\nPlacement: #${d.users[0].placement}\nPoints: ${d.users[0].points}\nHardest level: ${d.users[0].hardestLevelName} by ${d.users[0].hardestLevelCreator} (#${d.users[0].hardestLevelPlacement})`
+                out.innerText += '\n\n'
+                out.innerText += `[${d.users[1].country}] ${d.users[1].username}\nPlacement: #${d.users[1].placement}\nPoints: ${d.users[1].points}\nHardest level: ${d.users[1].hardestLevelName} by ${d.users[1].hardestLevelCreator} (#${d.users[1].hardestLevelPlacement})`
+                out.innerText += '\n\n'
+                out.innerText += d.comparison.results
+            }
             let button = document.querySelector('button')
             button.addEventListener('click', function(e) {
                 let circle = document.createElement('div')
