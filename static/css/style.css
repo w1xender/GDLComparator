@@ -45,13 +45,6 @@ body {
     gap: 1em;
 }
 
-.inputClass input, .inputClass button {
-    width: 1000px;
-    padding: 1em 2em;
-    border-radius: 2em;
-    font-size: 1.5em;
-}
-
 .inputClass input {
     background: rgba(0, 0, 0, 0.75);
     border: 2px solid rgba(240, 240, 240, 0.25);
@@ -68,6 +61,8 @@ body {
 }
 
 .inputClass button {
+    overflow: hidden;
+    position: relative;
     background: rgba(240, 240, 240, 0.75);
     border: none;
     color: #0F0F0F;
@@ -77,5 +72,30 @@ body {
 }
 
 .inputClass button:hover {
-    background: rgba(240, 240, 240, 1)
+    background: rgba(240, 240, 240, 0.9)
+}
+
+.inputClass input, .inputClass button {
+    width: 1000px;
+    padding: 1em 2em;
+    border-radius: 2em;
+    font-size: 1.5em;
+}
+
+.circle {
+    pointer-events: none;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(240, 240, 240, 1);
+    border-radius: 100%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: show 0.5s linear forwards;
+}
+
+@keyframes show {
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
 }
