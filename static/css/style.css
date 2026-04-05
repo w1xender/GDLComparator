@@ -13,7 +13,7 @@
 body {
     display: grid;
     grid-template-rows: auto 1fr;
-    overflow: hidden;
+    overflow-x: hidden;
     user-select: none;
     height: 100vh;
     background: #0F0F0F;
@@ -80,6 +80,11 @@ body {
     padding: 1em 2em;
     border-radius: 2em;
     font-size: 1.5em;
+}
+
+#out {
+    font-size: 1.75em;
+    padding: 25px;
 }
 
 .circle {
