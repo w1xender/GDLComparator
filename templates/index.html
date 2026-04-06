@@ -2,8 +2,8 @@
 <html lang='en'>
     <head>
         <meta charset='UTF-8'>
-        <link rel='stylesheet' href='../static/css/style.css'>
-        <link rel='icon' type='image/png' href='../static/png/ico.png'>
+        <link rel='stylesheet' href='/static/css/style.css'>
+        <link rel='icon' type='image/png' href='/static/png/ico.png'>
         <title>GDL Comparator</title>
     </head>
     <body>
@@ -12,18 +12,29 @@
             <input id='user1'>
             <input id='user2'>
             <button onclick='compare()'>GO</button>
-            <div id='out'></div>
+            <div class='cards'>
+                <div class='card'></div>
+                <div class='card'></div>
+            </div>
         </div>
         <script>
             async function compare() {
                 let r = await fetch('/compare', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({usernames: [user1.value, user2.value]})})
                 let d = await r.json()
-                out.innerText = ''
-                out.innerText += `[${d.users[0].country}] ${d.users[0].username}\nPlacement: #${d.users[0].placement}\nPoints: ${d.users[0].points}\nHardest level: ${d.users[0].hardestLevelName} by ${d.users[0].hardestLevelCreator} (#${d.users[0].hardestLevelPlacement})`
-                out.innerText += '\n\n'
-                out.innerText += `[${d.users[1].country}] ${d.users[1].username}\nPlacement: #${d.users[1].placement}\nPoints: ${d.users[1].points}\nHardest level: ${d.users[1].hardestLevelName} by ${d.users[1].hardestLevelCreator} (#${d.users[1].hardestLevelPlacement})`
-                out.innerText += '\n\n'
-                out.innerText += d.comparison.results
+                let cards = document.querySelectorAll('.card')
+                cards.forEach(function(card, index) {
+                    let user = d.users[index]
+                    card.innerHTML = ''
+                    card.innerHTML += `<div class='usernameClass'>${user.country}<p class='username'>${user.username}</p></div>
+                                       <p>Placement: #${user.placement}</p>
+                                       <p>Points: ${user.points}</p>
+                                       <p>Hardest level: ${user.hardestLevelName} by ${user.hardestLevelCreator} (#${user.hardestLevelPlacement})</p>
+                                       <p>Cleared ${user.cleared} levels (${user.notCleared} non-100% records)</p>
+                                       <p>Verified ${user.verifiedCount} levels</p>`
+                    if (user.hardestVerifiedLevelName != null) {
+                        card.innerHTML += `<p>Hardest verified level: ${user.hardestVerifiedLevelName} by ${user.hardestVerifiedLevelCreator} (#${user.hardestVerifiedLevelPlacement})</p>`
+                    }
+                })
             }
             let button = document.querySelector('button')
             button.addEventListener('click', function(e) {
