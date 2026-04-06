@@ -3,6 +3,7 @@
     padding: 0;
     font-family: 'Muli';
     box-sizing: border-box;
+    transition: all 0.1s ease;
 }
 
 @font-face {
@@ -46,15 +47,10 @@ body {
 }
 
 .inputClass input {
-    background: rgba(0, 0, 0, 0.75);
-    border: 2px solid rgba(240, 240, 240, 0.25);
     outline: none;
-    color: rgba(240, 240, 240, 1);
-    letter-spacing: 0.25ch;
-    transition: all 0.25s ease;
 }
 
-.inputClass input:focus {
+.inputClass input:focus, .card:hover {
     background: rgba(0, 0, 0, 0.5);
     border-color: rgba(240, 240, 240, 0.75);
     box-shadow: 0 0 12px rgba(240, 240, 240, 0.25);
@@ -67,7 +63,6 @@ body {
     border: none;
     color: #0F0F0F;
     letter-spacing: 0.5ch;
-    transition: all 0.25s ease;
     cursor: pointer;
 }
 
@@ -77,14 +72,45 @@ body {
 
 .inputClass input, .inputClass button {
     width: 1000px;
+    font-size: 1.5em;
     padding: 1em 2em;
+}
+
+.inputClass input, .inputClass button, .card {
     border-radius: 2em;
+}
+
+.inputClass input, .card {
+    background: rgba(0, 0, 0, 0.75);
+    border: 2px solid rgba(240, 240, 240, 0.25);
+    color: rgba(240, 240, 240, 1);
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    width: 90%;
+}
+
+.card {
+    flex: 1;
+    padding: 1.5em;
+}
+
+.usernameClass {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.card .username {
     font-size: 1.5em;
 }
 
-#out {
-    font-size: 1.75em;
-    padding: 25px;
+.card p {
+    font-size: 1.25em;
 }
 
 .circle {
