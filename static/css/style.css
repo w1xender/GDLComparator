@@ -11,6 +11,11 @@
     src: url('../ttf/Muli-SemiBold.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Poppins';
+    src: url('../ttf/Poppins-Bold.ttf') format('truetype');
+}
+
 body {
     display: grid;
     grid-template-rows: auto 1fr;
@@ -36,6 +41,7 @@ body {
     font-size: 4em;
     letter-spacing: 0.25ch;
     text-align: center;
+    font-family: 'Poppins';
 }
 
 .inputClass {
@@ -107,6 +113,7 @@ body {
 
 .card .username {
     font-size: 1.5em;
+    font-style: italic;
 }
 
 .card p {
