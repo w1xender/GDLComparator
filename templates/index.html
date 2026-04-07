@@ -8,7 +8,7 @@
     </head>
     <body>
         <p class='title'>Global Demonlist Comparator</p>
-        <div class='inputClass'>
+        <div class='mainClass'>
             <input id='user1'>
             <input id='user2'>
             <button onclick='compare()'>GO</button>
@@ -17,27 +17,43 @@
                 <div class='card' hidden></div>
             </div>
         </div>
+        <div class='loading' style='visibility: hidden;'>
+            <svg width='200' height='200' viewBox='0 0 200 200'>
+                <mask id='mask'>
+                    <circle cx='100' cy='100' r='100' fill='white'/>
+                    <circle cx='100' cy='100' r='75' fill='black'/>
+                    <rect x='150' y='75' width='50' height='50' fill='black'/>
+                </mask>
+                <circle cx='100' cy='100' r='100' fill='white' mask='url(#mask)'/>
+            </svg>
+        </div>
         <script>
             async function compare() {
-                let r = await fetch('/compare', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({usernames: [user1.value, user2.value]})})
-                let d = await r.json()
-                let cards = document.querySelectorAll('.card')
-                cards.forEach(function(card, index) {
-                    let user = d.users[index]
-                    card.innerHTML = ''
-                    card.hidden = false
-                    card.innerHTML += `<div class='usernameClass'>${user.country}<p class='username'>${user.username}</p></div>
-                                       <p>Placement: #${user.placement}</p>
-                                       <p>Points: ${user.points}</p>
-                                       <p>Hardest level: ${user.hardestLevelName} by ${user.hardestLevelCreator} (#${user.hardestLevelPlacement})</p>
-                                       <p>Cleared ${user.cleared} levels (${user.notCleared} non-100% records)</p>
-                                       <p>Verified ${user.verifiedCount} levels</p>`
-                    if (user.hardestVerifiedLevelName != null) {
-                        card.innerHTML += `<p>Hardest verified level: ${user.hardestVerifiedLevelName} by ${user.hardestVerifiedLevelCreator} (#${user.hardestVerifiedLevelPlacement})</p>`
-                    } else {
-                        card.innerHTML += '<p>:)</p>'
-                    }
-                })
+                let loading = document.querySelector('.loading')
+                loading.style.visibility = 'visible'
+                try {
+                    let r = await fetch('/compare', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({usernames: [user1.value, user2.value]})})
+                    let d = await r.json()
+                    let cards = document.querySelectorAll('.card')
+                    cards.forEach(function(card, index) {
+                        let user = d.users[index]
+                        card.innerHTML = ''
+                        card.hidden = false
+                        card.innerHTML += `<div class='usernameClass'>${user.country}<p class='username'>${user.username}</p></div>
+                                        <p>Placement: #${user.placement}</p>
+                                        <p>Points: ${user.points}</p>
+                                        <p>Hardest level: ${user.hardestLevelName} by ${user.hardestLevelCreator} (#${user.hardestLevelPlacement})</p>
+                                        <p>Cleared ${user.cleared} levels (${user.notCleared} non-100% records)</p>
+                                        <p>Verified ${user.verifiedCount} levels</p>`
+                        if (user.hardestVerifiedLevelName != null) {
+                            card.innerHTML += `<p>Hardest verified level: ${user.hardestVerifiedLevelName} by ${user.hardestVerifiedLevelCreator} (#${user.hardestVerifiedLevelPlacement})</p>`
+                        } else {
+                            card.innerHTML += '<p>:)</p>'
+                        }
+                    })
+                } finally {
+                    loading.style.visibility = 'hidden'
+                }
             }
             let button = document.querySelector('button')
             button.addEventListener('click', function(e) {
