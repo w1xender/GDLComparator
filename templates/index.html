@@ -13,8 +13,8 @@
             <input id='user2'>
             <button onclick='compare()'>GO</button>
             <div class='cards'>
-                <div class='card'></div>
-                <div class='card'></div>
+                <div class='card' hidden></div>
+                <div class='card' hidden></div>
             </div>
         </div>
         <script>
@@ -25,6 +25,7 @@
                 cards.forEach(function(card, index) {
                     let user = d.users[index]
                     card.innerHTML = ''
+                    card.hidden = false
                     card.innerHTML += `<div class='usernameClass'>${user.country}<p class='username'>${user.username}</p></div>
                                        <p>Placement: #${user.placement}</p>
                                        <p>Points: ${user.points}</p>
@@ -33,6 +34,8 @@
                                        <p>Verified ${user.verifiedCount} levels</p>`
                     if (user.hardestVerifiedLevelName != null) {
                         card.innerHTML += `<p>Hardest verified level: ${user.hardestVerifiedLevelName} by ${user.hardestVerifiedLevelCreator} (#${user.hardestVerifiedLevelPlacement})</p>`
+                    } else {
+                        card.innerHTML += '<p>:)</p>'
                     }
                 })
             }
