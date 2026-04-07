@@ -44,7 +44,7 @@ body {
     font-family: 'Poppins';
 }
 
-.inputClass {
+.mainClass {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -52,17 +52,17 @@ body {
     gap: 1em;
 }
 
-.inputClass input {
+.mainClass input {
     outline: none;
 }
 
-.inputClass input:focus, .card:hover {
+.mainClass input:focus, .card:hover {
     background: rgba(0, 0, 0, 0.5);
     border-color: rgba(240, 240, 240, 0.75);
     box-shadow: 0 0 12px rgba(240, 240, 240, 0.25);
 }
 
-.inputClass button {
+.mainClass button {
     overflow: hidden;
     position: relative;
     background: rgba(240, 240, 240, 0.75);
@@ -72,21 +72,21 @@ body {
     cursor: pointer;
 }
 
-.inputClass button:hover {
+.mainClass button:hover {
     background: rgba(240, 240, 240, 0.9)
 }
 
-.inputClass input, .inputClass button {
+.mainClass input, .mainClass button {
     width: 1000px;
     font-size: 1.5em;
     padding: 1em 2em;
 }
 
-.inputClass input, .inputClass button, .card {
+.mainClass input, .mainClass button, .card {
     border-radius: 2em;
 }
 
-.inputClass input, .card {
+.mainClass input, .card {
     background: rgba(0, 0, 0, 0.75);
     border: 2px solid rgba(240, 240, 240, 0.25);
     color: rgba(240, 240, 240, 1);
@@ -118,6 +118,31 @@ body {
 
 .card p {
     font-size: 1.25em;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.loading svg {
+    pointer-events: none;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        rotate: 360deg;
+    }
 }
 
 .circle {
