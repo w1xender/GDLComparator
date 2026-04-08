@@ -16,8 +16,9 @@
                 <div class='card' hidden></div>
                 <div class='card' hidden></div>
             </div>
+            <div class='comparison'></div>
         </div>
-        <div class='loading' style='visibility: hidden;'>
+        <div class='loading' style='display: none;'>
             <svg width='200' height='200' viewBox='0 0 200 200'>
                 <mask id='mask'>
                     <circle cx='100' cy='100' r='100' fill='white'/>
@@ -30,7 +31,7 @@
         <script>
             async function compare() {
                 let loading = document.querySelector('.loading')
-                loading.style.visibility = 'visible'
+                loading.style.display = 'flex'
                 try {
                     let r = await fetch('/compare', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({usernames: [user1.value, user2.value]})})
                     let d = await r.json()
@@ -39,7 +40,7 @@
                         let user = d.users[index]
                         card.innerHTML = ''
                         card.hidden = false
-                        card.innerHTML += `<div class='usernameClass'>${user.country}<p class='username'>${user.username}</p></div>
+                        card.innerHTML += `<div class='usernameClass'>${user.country}${user.badge}<p class='username'>${user.username}</p></div>
                                         <p>Placement: #${user.placement}</p>
                                         <p>Points: ${user.points}</p>
                                         <p>Hardest level: ${user.hardestLevelName} by ${user.hardestLevelCreator} (#${user.hardestLevelPlacement})</p>
@@ -50,9 +51,11 @@
                         } else {
                             card.innerHTML += '<p>:)</p>'
                         }
+                    let comparison = document.querySelector('.comparison')
+                    comparison.innerHTML = `<p>${d.comparison.results}</p>`
                     })
                 } finally {
-                    loading.style.visibility = 'hidden'
+                    loading.style.display = 'none'
                 }
             }
             let button = document.querySelector('button')
