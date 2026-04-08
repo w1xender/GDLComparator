@@ -25,6 +25,7 @@ def fetchData(username):
                 hardestVerifiedLevelCreator = sub(r'\bM\b', 'more', hardestVerifiedLevelCreator)
             stats = {
                 'country': f'<img src=https://flagcdn.com/40x30/{pycountry.countries.search_fuzzy(user["country"].replace("-", " "))[0].alpha_2.lower()}.png>',
+                'badge': '<img src=/static/png/formerCheater.png style="width: 40px; height: 40px;">' if user['badge'] == 'former_cheater' else '',
                 'username': user['username'],
                 'placement': userData['placement'],
                 'points': float(userData['points']),
