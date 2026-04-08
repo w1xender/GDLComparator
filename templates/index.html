@@ -52,7 +52,7 @@
                             card.innerHTML += '<p>:)</p>'
                         }
                     let comparison = document.querySelector('.comparison')
-                    comparison.innerHTML = `<p>${d.comparison.results}</p>`
+                    comparison.innerHTML = d.comparison.results.map(line => `<p>${line}</p>`).join('')
                     })
                 } finally {
                     loading.style.display = 'none'
