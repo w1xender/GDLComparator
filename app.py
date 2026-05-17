@@ -102,5 +102,3 @@ def compare():
         'users': stats,
         'comparison': comparison
     })
-if __name__ == '__main__':
-    app.run()
